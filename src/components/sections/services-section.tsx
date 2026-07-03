@@ -15,32 +15,42 @@ export function ServicesSection() {
           }`}
         >
           <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
-            Услуги
+            Измерения
           </h2>
-          <p className="font-mono text-sm text-foreground/60 md:text-base">/ Наши компетенции</p>
+          <p className="font-mono text-sm text-foreground/60 md:text-base">/ Область аккредитации</p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 md:gap-x-16 md:gap-y-12 lg:gap-x-24">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-x-12 md:gap-y-10 lg:gap-x-16">
           {[
             {
-              title: "Веб-разработка",
-              description: "Создание современных веб-приложений любой сложности",
+              title: "Шум",
+              description: "Измерение уровней звука и звукового давления на рабочих местах и территории",
               direction: "top",
             },
             {
-              title: "UI/UX Дизайн",
-              description: "Проектирование удобных и красивых интерфейсов",
+              title: "Вибрация",
+              description: "Общая и локальная вибрация оборудования, транспорта и рабочих зон",
               direction: "right",
             },
             {
-              title: "Мобильные приложения",
-              description: "Кроссплатформенная разработка для iOS и Android",
+              title: "Освещённость",
+              description: "Оценка искусственного и естественного освещения, коэффициента пульсации",
+              direction: "top",
+            },
+            {
+              title: "МАЭД",
+              description: "Мощность амбиентной эквивалентной дозы гамма-излучения",
               direction: "left",
             },
             {
-              title: "Консалтинг",
-              description: "Техническая экспертиза и стратегическое планирование",
+              title: "Гамма-съёмка",
+              description: "Поиск и картирование источников ионизирующего излучения на объекте",
               direction: "bottom",
+            },
+            {
+              title: "ЭМИ",
+              description: "Электромагнитные поля и излучения промышленной частоты и радиочастот",
+              direction: "right",
             },
           ].map((service, i) => (
             <ServiceCard key={i} service={service} index={i} isVisible={isVisible} />
