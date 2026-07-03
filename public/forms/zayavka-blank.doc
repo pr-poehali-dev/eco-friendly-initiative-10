@@ -1,0 +1,121 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<title>Заявка на проведение измерений</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+  @page { size: 21cm 29.7cm; margin: 2cm; }
+  body { font-family: 'Times New Roman', serif; font-size: 14px; line-height: 1.5; color:#000; }
+  .right { text-align: right; width: 60%; margin-left: auto; }
+  .center { text-align: center; }
+  .bold { font-weight: bold; }
+  .code { text-align: right; font-size: 12px; color:#444; }
+  .title { text-align: center; font-weight: bold; font-size: 18px; margin: 24px 0 4px; text-transform: uppercase; }
+  .subtitle { text-align: center; font-size: 14px; margin-bottom: 20px; }
+  .field { margin: 10px 0 2px; }
+  .line { border-bottom: 1px solid #000; display: inline-block; min-width: 260px; }
+  .hint { font-size: 11px; color: #555; }
+  .checks { margin: 10px 0; }
+  .checks span { display: inline-block; width: 32%; margin-bottom: 6px; }
+  .sign-block { margin-top: 30px; }
+  .sign-row { display: flex; justify-content: space-between; margin-top: 40px; }
+  .sign-col { text-align: center; width: 30%; border-top: 1px solid #000; font-size: 11px; padding-top: 4px; }
+  hr { margin: 30px 0; border: none; border-top: 1px dashed #999; }
+</style>
+</head>
+<body>
+
+  <p class="code">Ф-07-01-РК 01-01-2024</p>
+
+  <p class="right">
+    Генеральному директору<br>
+    Общества с ограниченной ответственностью<br>
+    «ГОЛОВНОЙ ЦЕНТР ЛАБОРАТОРНО-ЭКОЛОГИЧЕСКИХ ИССЛЕДОВАНИЙ»<br>
+    Е.В. Антоновой<br>
+    <br>
+    От _______________________________________<br>
+    <span class="hint">(должность, ФИО руководителя заказчика)</span>
+  </p>
+
+  <p class="title">Заявка</p>
+  <p class="subtitle">на проведение измерений</p>
+
+  <p class="field">Заказчик: <span class="line">&nbsp;</span></p>
+  <p class="hint">(наименование юридического лица, индивидуального предпринимателя, ФИО гражданина)</p>
+
+  <p class="field">В лице: <span class="line">&nbsp;</span></p>
+  <p class="hint">(должность представителя юридического лица, ФИО индивидуального предпринимателя, ФИО гражданина)</p>
+
+  <p class="field">действующего на основании (заполняется для юридических лиц)</p>
+  <p class="field"><span class="line" style="min-width: 100%;">&nbsp;</span></p>
+  <p class="hint">(Устава, доверенности № и дата, др. документа № и дата)</p>
+
+  <p class="field">Юридический адрес Заказчика: <span class="line" style="min-width: 70%;">&nbsp;</span></p>
+  <p class="field">Фактический адрес Заказчика: <span class="line" style="min-width: 70%;">&nbsp;</span></p>
+  <p class="field">ИНН/КПП: <span class="line" style="min-width: 200px;">&nbsp;</span> / <span class="line" style="min-width: 200px;">&nbsp;</span></p>
+  <p class="field">ОГРН (ОГРНИП): <span class="line" style="min-width: 70%;">&nbsp;</span></p>
+  <p class="field">Телефон, факс, e-mail контактного лица: <span class="line" style="min-width: 65%;">&nbsp;</span></p>
+  <p class="field">Наименование и адрес объекта, где должны проводиться измерения:</p>
+  <p class="field"><span class="line" style="min-width: 100%;">&nbsp;</span></p>
+
+  <p class="field bold">Исследуемые показатели:</p>
+  <p class="checks">
+    <span>☐ Шум</span><span>☐ Вибрация</span><span>☐ Освещённость</span>
+    <span>☐ МАЭД</span><span>☐ Гамма-съёмка</span><span>☐ ЭМИ</span>
+  </p>
+
+  <p class="field">На соответствие требованиям: <span class="line" style="min-width: 60%;">&nbsp;</span></p>
+  <p class="hint">(указать номер НД)</p>
+
+  <p class="field">Для проведения измерений:</p>
+  <p class="field">☐ оставляю право выбора оптимального метода измерений за испытательной лабораторией</p>
+
+  <p class="field">Дополнительные сведения (указываются при необходимости): <span class="line" style="min-width: 55%;">&nbsp;</span></p>
+
+  <p class="field">К заявке прилагаются:</p>
+  <p class="field">1. <span class="line" style="min-width: 90%;">&nbsp;</span></p>
+  <p class="hint">(документы при необходимости)</p>
+
+  <div class="sign-block">
+    <p class="bold">Заказчик (представитель заказчика):</p>
+    <div class="sign-row">
+      <div class="sign-col">должность (при наличии)</div>
+      <div class="sign-col">подпись</div>
+      <div class="sign-col">И.О. Фамилия</div>
+    </div>
+    <p style="margin-top:10px;">М.П. (при наличии)</p>
+    <p>«____» ______________________ 20____ г.</p>
+  </div>
+
+  <hr>
+
+  <p class="field">Контактное лицо: <span class="line" style="min-width: 70%;">&nbsp;</span></p>
+  <p class="field">Анализ заявки от «____» ______________ 20____ г.</p>
+
+  <p class="field bold">Результаты анализа (указать нужное):</p>
+  <p class="field">☐ Методики / исследуемые показатели включены в область аккредитации ИЛ</p>
+  <p class="field">☐ Наличие компетентного персонала</p>
+  <p class="field">☐ Техническая возможность проведения измерений обеспечена</p>
+  <p class="hint">(наличие помещения, оборудования (СИ, ВО), расходных материалов)</p>
+
+  <p class="field bold">Вывод по анализу заявки:</p>
+  <p class="field">☐ Заявку принять в работу, провести измерения</p>
+  <p class="field">☐ Привлечение субподрядной организации для проведения измерения</p>
+  <p class="field">Согласование Заказчика: <span class="line" style="min-width: 30%;">&nbsp;</span> <span class="line" style="min-width: 20%;">&nbsp;</span> <span class="line" style="min-width: 25%;">&nbsp;</span></p>
+  <p class="hint">(должность) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(подпись) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(И.О. Фамилия)</p>
+
+  <p class="field">☐ Отказать в проведении исследований, измерений в связи с</p>
+  <p class="field"><span class="line" style="min-width: 100%;">&nbsp;</span></p>
+  <p class="hint">(причина отказа)</p>
+
+  <p style="margin-top:40px;">Руководитель испытательной лаборатории &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Е.В. Антонова</p>
+
+</body>
+</html>

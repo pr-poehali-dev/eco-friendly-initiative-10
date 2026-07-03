@@ -2,18 +2,39 @@ import { Mail, MapPin } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
 import { useState, type FormEvent } from "react"
 import { MagneticButton } from "@/components/magnetic-button"
+import { toast } from "@/hooks/use-toast"
+
+const FACTORS = ["Шум", "Вибрация", "Освещённость", "МАЭД", "Гамма-съёмка", "ЭМИ"]
 
 export function ContactSection() {
   const { ref, isVisible } = useReveal(0.3)
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  const [formData, setFormData] = useState({
+    company: "",
+    contactPerson: "",
+    inn: "",
+    phone: "",
+    email: "",
+    objectAddress: "",
+    factors: [] as string[],
+    message: "",
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  const toggleFactor = (factor: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      factors: prev.factors.includes(factor)
+        ? prev.factors.filter((f) => f !== factor)
+        : [...prev.factors, factor],
+    }))
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.company || !formData.contactPerson || !formData.email || !formData.objectAddress) {
+      toast({ title: "Заполните обязательные поля", variant: "destructive" })
       return
     }
 
@@ -24,19 +45,27 @@ export function ContactSection() {
 
     setIsSubmitting(false)
     setSubmitSuccess(true)
-    setFormData({ name: "", email: "", message: "" })
+    setFormData({
+      company: "",
+      contactPerson: "",
+      inn: "",
+      phone: "",
+      email: "",
+      objectAddress: "",
+      factors: [],
+      message: "",
+    })
 
-    // Reset success message after 5 seconds
     setTimeout(() => setSubmitSuccess(false), 5000)
   }
 
   return (
     <section
       ref={ref}
-      className="flex h-screen w-screen shrink-0 snap-start items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16"
+      className="flex h-screen w-screen shrink-0 snap-start items-center overflow-y-auto px-4 pt-24 pb-8 md:px-12 md:pt-0 lg:px-16"
     >
       <div className="mx-auto w-full max-w-7xl">
-        <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24">
+        <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:gap-16 lg:gap-24">
           <div className="flex flex-col justify-center">
             <div
               className={`mb-6 transition-all duration-700 md:mb-12 ${
@@ -97,27 +126,99 @@ export function ContactSection() {
                   </a>
                 ))}
               </div>
+
+              <div
+                className={`pt-3 transition-all duration-700 md:pt-4 ${
+                  isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+                }`}
+                style={{ transitionDelay: "600ms" }}
+              >
+                <a
+                  href="/forms/zayavka-blank.doc"
+                  download
+                  className="font-mono text-xs text-foreground/60 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground/90 hover:decoration-foreground/60"
+                >
+                  Скачать бланк заявки (Ф-07-01-РК)
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Right side - Minimal form */}
+          {/* Right side - Detailed form */}
           <div className="flex flex-col justify-center">
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "200ms" }}
-              >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Имя</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Ваше имя"
-                />
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+              <div className="grid gap-3 md:grid-cols-2 md:gap-4">
+                <div
+                  className={`transition-all duration-700 ${
+                    isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "150ms" }}
+                >
+                  <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                    Организация / ФИО заказчика *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    required
+                    className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                    placeholder="ООО «Компания»"
+                  />
+                </div>
+
+                <div
+                  className={`transition-all duration-700 ${
+                    isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "200ms" }}
+                >
+                  <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                    Контактное лицо *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.contactPerson}
+                    onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
+                    required
+                    className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                    placeholder="Иванов Иван Иванович"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-3 md:grid-cols-2 md:gap-4">
+                <div
+                  className={`transition-all duration-700 ${
+                    isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "250ms" }}
+                >
+                  <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">ИНН</label>
+                  <input
+                    type="text"
+                    value={formData.inn}
+                    onChange={(e) => setFormData({ ...formData, inn: e.target.value })}
+                    className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                    placeholder="0000000000"
+                  />
+                </div>
+
+                <div
+                  className={`transition-all duration-700 ${
+                    isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "300ms" }}
+                >
+                  <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Телефон</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                    placeholder="+7 900 000-00-00"
+                  />
+                </div>
               </div>
 
               <div
@@ -126,7 +227,7 @@ export function ContactSection() {
                 }`}
                 style={{ transitionDelay: "350ms" }}
               >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Email</label>
+                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Email *</label>
                 <input
                   type="email"
                   value={formData.email}
@@ -141,34 +242,81 @@ export function ContactSection() {
                 className={`transition-all duration-700 ${
                   isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                 }`}
-                style={{ transitionDelay: "500ms" }}
+                style={{ transitionDelay: "400ms" }}
               >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Задача</label>
-                <textarea
-                  rows={3}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                  Адрес объекта измерений *
+                </label>
+                <input
+                  type="text"
+                  value={formData.objectAddress}
+                  onChange={(e) => setFormData({ ...formData, objectAddress: e.target.value })}
                   required
                   className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Какие факторы нужно измерить и на каком объекте?"
+                  placeholder="Город, улица, дом"
                 />
               </div>
 
               <div
                 className={`transition-all duration-700 ${
+                  isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+                }`}
+                style={{ transitionDelay: "450ms" }}
+              >
+                <label className="mb-2 block font-mono text-xs text-foreground/60">
+                  Исследуемые показатели
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {FACTORS.map((factor) => (
+                    <button
+                      type="button"
+                      key={factor}
+                      onClick={() => toggleFactor(factor)}
+                      className={`rounded-full border px-3 py-1 font-mono text-xs transition-colors ${
+                        formData.factors.includes(factor)
+                          ? "border-foreground/60 bg-foreground/15 text-foreground"
+                          : "border-foreground/20 text-foreground/60 hover:border-foreground/40 hover:text-foreground/90"
+                      }`}
+                    >
+                      {factor}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div
+                className={`transition-all duration-700 ${
+                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                }`}
+                style={{ transitionDelay: "500ms" }}
+              >
+                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                  Дополнительные сведения
+                </label>
+                <textarea
+                  rows={2}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                  placeholder="Сроки, требования НД и другие детали"
+                />
+              </div>
+
+              <div
+                className={`pt-2 transition-all duration-700 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
                 }`}
-                style={{ transitionDelay: "650ms" }}
+                style={{ transitionDelay: "550ms" }}
               >
                 <MagneticButton
                   variant="primary"
                   size="lg"
                   className="w-full disabled:opacity-50"
                 >
-                  {isSubmitting ? "Отправка..." : "Отправить"}
+                  {isSubmitting ? "Отправка..." : "Отправить заявку"}
                 </MagneticButton>
                 {submitSuccess && (
-                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">Сообщение отправлено!</p>
+                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">Заявка отправлена!</p>
                 )}
               </div>
             </form>
