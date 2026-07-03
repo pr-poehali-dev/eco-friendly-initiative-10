@@ -1,8 +1,9 @@
 import { Mail, MapPin } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
-import { useState, type FormEvent } from "react"
+import { useRef, useState, type ChangeEvent, type FormEvent } from "react"
 import { MagneticButton } from "@/components/magnetic-button"
 import { toast } from "@/hooks/use-toast"
+import Icon from "@/components/ui/icon"
 
 const FACTORS = ["Шум", "Вибрация", "Освещённость", "МАЭД", "Гамма-съёмка", "ЭМИ"]
 
@@ -20,6 +21,13 @@ export function ContactSection() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [schemeFile, setSchemeFile] = useState<File | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleSchemeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) setSchemeFile(file)
+  }
 
   const toggleFactor = (factor: string) => {
     setFormData((prev) => ({
@@ -55,6 +63,7 @@ export function ContactSection() {
       factors: [],
       message: "",
     })
+    setSchemeFile(null)
 
     setTimeout(() => setSubmitSuccess(false), 5000)
   }
@@ -125,21 +134,6 @@ export function ContactSection() {
                     {social}
                   </a>
                 ))}
-              </div>
-
-              <div
-                className={`pt-3 transition-all duration-700 md:pt-4 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-                }`}
-                style={{ transitionDelay: "600ms" }}
-              >
-                <a
-                  href="/forms/zayavka-blank.doc"
-                  download
-                  className="font-mono text-xs text-foreground/60 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground/90 hover:decoration-foreground/60"
-                >
-                  Скачать бланк заявки (Ф-07-01-РК)
-                </a>
               </div>
             </div>
           </div>
@@ -306,18 +300,51 @@ export function ContactSection() {
                 className={`pt-2 transition-all duration-700 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
                 }`}
+                style={{ transitionDelay: "500ms" }}
+              >
+                <label className="mb-2 block font-mono text-xs text-foreground/60">
+                  Схема размещения точек измерений
+                </label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleSchemeChange}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex w-full items-center justify-center gap-2 rounded-full border border-foreground/20 bg-foreground/5 px-6 py-3 font-mono text-sm text-foreground/80 backdrop-blur-xl transition-all hover:border-foreground/40 hover:text-foreground"
+                >
+                  <Icon name="Upload" size={16} />
+                  {schemeFile ? schemeFile.name : "Загрузить схему объекта"}
+                </button>
+              </div>
+
+              <div
+                className={`pt-4 transition-all duration-700 ${
+                  isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+                }`}
                 style={{ transitionDelay: "550ms" }}
               >
                 <MagneticButton
                   variant="primary"
                   size="lg"
-                  className="w-full disabled:opacity-50"
+                  className="w-full py-5 text-lg disabled:opacity-50"
                 >
                   {isSubmitting ? "Отправка..." : "Отправить заявку"}
                 </MagneticButton>
                 {submitSuccess && (
                   <p className="mt-3 text-center font-mono text-sm text-foreground/80">Заявка отправлена!</p>
                 )}
+                <a
+                  href="/forms/zayavka-blank.doc"
+                  download
+                  className="mt-4 block text-center font-mono text-xs text-foreground/60 underline decoration-foreground/30 underline-offset-4 transition-colors hover:text-foreground/90 hover:decoration-foreground/60"
+                >
+                  Скачать бланк заявки (Ф-07-01-РК)
+                </a>
               </div>
             </form>
           </div>
