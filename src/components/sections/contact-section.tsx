@@ -38,6 +38,17 @@ export function ContactSection() {
     }))
   }
 
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        const result = reader.result as string
+        resolve(result.split(",")[1] || "")
+      }
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -48,24 +59,39 @@ export function ContactSection() {
 
     setIsSubmitting(true)
 
-    // Simulate form submission (replace with actual API call later)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      const schemeFileBase64 = schemeFile ? await fileToBase64(schemeFile) : ""
 
-    setIsSubmitting(false)
-    setSubmitSuccess(true)
-    setFormData({
-      company: "",
-      contactPerson: "",
-      inn: "",
-      phone: "",
-      email: "",
-      objectAddress: "",
-      factors: [],
-      message: "",
-    })
-    setSchemeFile(null)
+      const response = await fetch("https://functions.poehali.dev/5d0fc7c4-bb32-472f-97e0-5295c033c031", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          schemeFileName: schemeFile?.name || "",
+          schemeFileBase64,
+        }),
+      })
 
-    setTimeout(() => setSubmitSuccess(false), 5000)
+      if (!response.ok) throw new Error("Ошибка отправки")
+
+      setSubmitSuccess(true)
+      setFormData({
+        company: "",
+        contactPerson: "",
+        inn: "",
+        phone: "",
+        email: "",
+        objectAddress: "",
+        factors: [],
+        message: "",
+      })
+      setSchemeFile(null)
+      setTimeout(() => setSubmitSuccess(false), 5000)
+    } catch {
+      toast({ title: "Не удалось отправить заявку. Попробуйте позже.", variant: "destructive" })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -116,7 +142,7 @@ export function ContactSection() {
                   <MapPin className="h-3 w-3 text-foreground/60" />
                   <span className="font-mono text-xs text-foreground/60">Локация</span>
                 </div>
-                <p className="text-base text-foreground md:text-2xl">Москва, Россия</p>
+                <p className="text-base text-foreground md:text-2xl">Чувашская Республика, Чебоксары, Россия</p>
               </div>
 
               <div
