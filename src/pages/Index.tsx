@@ -222,7 +222,7 @@ export default function Index() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-foreground/15 backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-foreground/25">
             <span className="font-sans text-xl font-bold text-foreground">Л</span>
           </div>
-          <span className="font-sans text-xl font-semibold tracking-tight text-foreground">ИЛ Физфакторы</span>
+          <span className="font-sans text-xl font-semibold tracking-tight text-foreground">ООО "ГЦЛЭИ"</span>
         </button>
 
         <div className="hidden items-center gap-8 md:flex">
